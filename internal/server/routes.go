@@ -12,7 +12,12 @@ func (s *Server) RegisterRoutes() http.Handler {
 	fileServer := http.FileServer(http.FS(web.Files))
 	mux.Handle("/assets/", fileServer)
 
-	return s.corsMiddleware(mux)
+	stack := CreateStack(
+		LoggingMiddleware,
+		s.corsMiddleware,
+	)
+
+	return stack(mux)
 }
 
 func (s *Server) corsMiddleware(next http.Handler) http.Handler {

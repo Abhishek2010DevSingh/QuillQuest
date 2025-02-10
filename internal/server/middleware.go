@@ -20,8 +20,6 @@ func CreateStack(xs ...Middleware) Middleware {
 	}
 }
 
-func LoggingMiddleware() Middleware {
-	return func(h http.Handler) http.Handler {
-		return handlers.LoggingHandler(os.Stdout, h)
-	}
+func LoggingMiddleware(next http.Handler) http.Handler {
+	return handlers.LoggingHandler(os.Stdout, next)
 }
