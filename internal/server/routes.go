@@ -4,6 +4,9 @@ import (
 	"net/http"
 
 	"Abhishek2010DevSingh/QuillQuest/cmd/web"
+	"Abhishek2010DevSingh/QuillQuest/cmd/web/pages"
+
+	"github.com/a-h/templ"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
@@ -11,6 +14,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	fileServer := http.FileServer(http.FS(web.Files))
 	mux.Handle("/assets/", fileServer)
+	mux.Handle("/", templ.Handler(pages.Home()))
 
 	stack := CreateStack(
 		LoggingMiddleware,

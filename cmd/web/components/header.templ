@@ -1,0 +1,48 @@
+package components
+
+templ Header() {
+	<header class="bg-white dark:bg-gray-900 shadow-md">
+		<div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+			<div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+				<div class="flex items-center gap-3">
+					<img
+						src="assets/images/logo.png"
+						alt="QuillQuest Logo"
+						class="h-12 w-12 sm:h-16 sm:w-16"
+					/>
+					<div>
+						<h1 class="text-xl font-bold text-gray-900 sm:text-3xl dark:text-white">
+							QuillQuest
+						</h1>
+						<p class="mt-1 text-sm text-gray-600 sm:text-base dark:text-gray-400">
+							An AI-powered book-related question-answering system using Go.
+						</p>
+					</div>
+				</div>
+				<div class="flex items-center gap-3">
+					<button
+						id="theme-toggle"
+						class="p-2 rounded-md bg-gray-100 dark:bg-gray-700 transition hover:bg-gray-200 dark:hover:bg-gray-600"
+					>
+						<span id="theme-icon">🌙</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</header>
+	<script>
+	const themeToggle = document.getElementById('theme-toggle');
+	const themeIcon = document.getElementById('theme-icon');
+
+	themeToggle.addEventListener('click', () => {
+		const isDark = document.documentElement.classList.toggle('dark');
+		localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		themeIcon.textContent = isDark ? '☀️' : '🌙';
+	});
+
+	if (localStorage.getItem('theme') === 'dark') {
+		document.documentElement.classList.add('dark');
+		themeIcon.textContent = '☀️';
+	}
+</script>
+}
