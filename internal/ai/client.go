@@ -17,9 +17,9 @@ var (
 )
 
 func Init() error {
-	apiKey := os.Getenv("Gemini_Api_Key")
+	apiKey := os.Getenv("GEMINI_API_KEY")
 	if apiKey == "" {
-		return fmt.Errorf("'Gemini_Api_Key' is null")
+		return fmt.Errorf("'GEMINI_API_KEY' is null")
 	}
 	var err error
 	Once.Do(func() {

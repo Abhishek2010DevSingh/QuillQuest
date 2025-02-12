@@ -9,7 +9,10 @@ import (
 	"syscall"
 	"time"
 
+	"Abhishek2010DevSingh/QuillQuest/internal/ai"
 	"Abhishek2010DevSingh/QuillQuest/internal/server"
+
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
@@ -37,6 +40,9 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 }
 
 func main() {
+	if err := ai.Init(); err != nil {
+		log.Fatalln(err)
+	}
 
 	server := server.NewServer()
 
@@ -46,6 +52,7 @@ func main() {
 	// Run graceful shutdown in a separate goroutine
 	go gracefulShutdown(server, done)
 
+	log.Printf("Listening on %s", server.Addr)
 	err := server.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		panic(fmt.Sprintf("http server error: %s", err))
