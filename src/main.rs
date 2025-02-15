@@ -4,7 +4,7 @@ use dotenv::dotenv;
 use quill_quest::config::{env_provider::EnvConfigProvider, interface::ConfigProvider};
 use tokio::net::TcpListener;
 use tower::ServiceBuilder;
-use tower_http::trace::TraceLayer;
+use tower_http::{services::ServeDir, trace::TraceLayer};
 use tracing::Level;
 
 #[tokio::main]
@@ -26,7 +26,9 @@ async fn main() -> anyhow::Result<()> {
 
     let service_bulider = ServiceBuilder::new().layer(TraceLayer::new_for_http());
 
-    let router = Router::new().layer(service_bulider);
+    let router = Router::new()
+        .nest_service("/assets", ServeDir::new("assets"))
+        .layer(service_bulider);
 
     tracing::debug!("Server started at http://localhost:{port}/");
     axum::serve(listener, router)
