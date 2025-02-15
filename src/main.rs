@@ -1,10 +1,12 @@
 use anyhow::Context;
 use axum::Router;
+use dotenv::dotenv;
 use quill_quest::config::{env_provider::EnvConfigProvider, interface::ConfigProvider};
 use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    dotenv().context("Dotenv encountererd an error")?;
     let config_provider = EnvConfigProvider::new().context("Failed to create EnvConfigProvider")?;
 
     let port = config_provider
