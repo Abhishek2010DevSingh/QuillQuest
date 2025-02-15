@@ -6,7 +6,7 @@ use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    dotenv().context("Dotenv encountererd an error")?;
+    dotenv().context("Failed to load .env file")?;
     let config_provider = EnvConfigProvider::new().context("Failed to create EnvConfigProvider")?;
 
     let port = config_provider
